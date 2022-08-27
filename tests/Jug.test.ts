@@ -12,20 +12,6 @@ test("It should be able to fill a jug with water", () => {
   expect(jug.water).toBe(10);
 });
 
-test("It should be able to check if a jug is empty", () => {
-  const jug = new Jug(10);
-  expect(jug.isEmpty()).toBe(true);
-  jug.fill(10);
-  expect(jug.isEmpty()).toBe(false);
-});
-
-test("It should be able to check if a jug is full", () => {
-  const jug = new Jug(10);
-  expect(jug.isFull()).toBe(false);
-  jug.fill(10);
-  expect(jug.isFull()).toBe(true);
-});
-
 test("It should be able to throw an error if tries to fill above capacity", () => {
   const jug = new Jug(10);
   expect(() => jug.fill(12)).toThrowError("Not enough capacity");
@@ -41,4 +27,18 @@ test("It should be able to dumb water from a jug", () => {
 test("It should throw an error when trying to dumb more water than it has", () => {
   const jug = new Jug(10);
   expect(() => jug.dumb(12)).toThrowError("Not enough water to dumb");
+});
+
+test("It should be able to check if a jug is empty", () => {
+  const jug = new Jug(10);
+  expect(jug.isEmpty()).toBe(true);
+  jug.fill(10);
+  expect(jug.isEmpty()).toBe(false);
+});
+
+test("It should be able to check if a jug is full", () => {
+  const jug = new Jug(10);
+  expect(jug.isFull()).toBe(false);
+  jug.fill(10);
+  expect(jug.isFull()).toBe(true);
 });
