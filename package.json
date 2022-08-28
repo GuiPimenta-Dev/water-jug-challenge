@@ -3,8 +3,10 @@
   "scripts": {
     "test": "tsc && jest --silent ./dist",
     "coverage": "npx jest --coverage --runInBand",
-    "start": "nodemon",
-    "debug": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/Server.ts"
+    "dev": "nodemon",
+    "start": "tsc && node ./dist/src/Server.js",
+    "debug": "tsnd --inspect --respawn --transpile-only --ignore-watch node_modules src/Server.ts",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/jest": "^28.1.3",

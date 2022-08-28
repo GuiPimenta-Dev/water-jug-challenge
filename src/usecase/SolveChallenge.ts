@@ -22,7 +22,7 @@ export default class SolveChallenge {
     const secondAttempt = this.currentStates;
     return firstAttempt.length < secondAttempt.length
       ? this.formatOutput(firstAttempt, ["X", "Y"])
-      : this.formatOutput(secondAttempt, ["X", "Y"]);
+      : this.formatOutput(secondAttempt, ["Y", "X"]);
   }
 
   private solve(): void {
@@ -38,20 +38,18 @@ export default class SolveChallenge {
     }
   }
 
-  private swapJugs() {
-    let temp: Jug = this.firstJug;
-    this.firstJug = this.secondJug;
-    this.secondJug = temp;
-  }
-
-  private reset() {
-    this.firstJug.empty();
-    this.secondJug.empty();
-    this.currentStates = [];
-  }
-
   private recordState(explanation: string) {
     this.currentStates.push({ firstJug: this.firstJug.water, secondJug: this.secondJug.water, explanation });
+  }
+
+  private isSolved() {
+    return this.firstJug.water == this.Z || this.secondJug.water == this.Z;
+  }
+
+  private transferWater(from: Jug, to: Jug, water: number) {
+    from.dump(water);
+    to.fill(water);
+    this.recordState(`Transfer bucket ${from.name} to bucket ${to.name}`);
   }
 
   private fullFillFirstJugIfEmpty() {
@@ -68,14 +66,16 @@ export default class SolveChallenge {
     }
   }
 
-  private transferWater(from: Jug, to: Jug, water: number) {
-    from.dump(water);
-    to.fill(water);
-    this.recordState(`Transfer bucket ${from.name} to bucket ${to.name}`);
+  private swapJugs() {
+    let temp: Jug = this.firstJug;
+    this.firstJug = this.secondJug;
+    this.secondJug = temp;
   }
 
-  private isSolved() {
-    return this.firstJug.water == this.Z || this.secondJug.water == this.Z;
+  private reset() {
+    this.firstJug.empty();
+    this.secondJug.empty();
+    this.currentStates = [];
   }
 
   private formatOutput(states: States[], labels: [string, string]) {
