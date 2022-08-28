@@ -14,6 +14,14 @@ export default class Jug {
     this.water -= water;
   }
 
+  empty() {
+    this.water = 0;
+  }
+
+  fullFill() {
+    this.water = this.capacity;
+  }
+
   isEmpty() {
     return this.water === 0;
   }
