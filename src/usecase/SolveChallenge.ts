@@ -2,73 +2,84 @@ import Jug from "../entity/Jug";
 import greatCommonDivisor from "../utils/Math";
 
 export default class SolveChallenge {
-  X: Jug;
-  Y: Jug;
+  firstJug: Jug;
+  secondJug: Jug;
   currentStates: States[];
   constructor(xCapacity: number, yCapacity: number, private Z: number) {
     if (Z % greatCommonDivisor(xCapacity, yCapacity) != 0) throw new Error("There is no Solution");
     if (Z > xCapacity && Z > yCapacity) throw new Error("There is no Solution");
-    this.X = new Jug(xCapacity, "X");
-    this.Y = new Jug(yCapacity, "Y");
+    this.firstJug = new Jug(xCapacity, "X");
+    this.secondJug = new Jug(yCapacity, "Y");
     this.currentStates = [];
   }
 
   execute() {
-    this.solve(this.X, this.Y);
+    this.solve();
     const firstAttempt = this.currentStates;
-    this.solve(this.Y, this.X);
+    this.swapJugs();
+    this.reset();
+    this.solve();
     const secondAttempt = this.currentStates;
-    if (firstAttempt.length < secondAttempt.length) {
-      return firstAttempt.map((s) => ({ X: s.firstJug, Y: s.secondJug, explanation: s.explanation }));
-    }
-    return secondAttempt.map((s) => ({ X: s.secondJug, Y: s.firstJug, explanation: s.explanation }));
+    return firstAttempt.length < secondAttempt.length
+      ? this.formatOutput(firstAttempt, ["X", "Y"])
+      : this.formatOutput(secondAttempt, ["X", "Y"]);
   }
 
-  private solve(firstJug: Jug, secondJug: Jug): void {
-    this.reset(firstJug, secondJug);
-    firstJug.fullFill();
-    this.recordState(firstJug, secondJug, `Fill bucket ${firstJug.name}`);
-    while (!this.isSolved(firstJug, secondJug)) {
-      const waterToBeTransfered = Math.min(firstJug.water, secondJug.capacity - secondJug.water);
-      this.transfer(firstJug, secondJug, waterToBeTransfered);
-      if (this.isSolved(firstJug, secondJug)) return;
-      this.fullFillFirstJugIfEmpty(firstJug, secondJug);
-      this.emptySecondJugIfFull(firstJug, secondJug);
+  private solve(): void {
+    this.firstJug.fullFill();
+    this.recordState(`Fill bucket ${this.firstJug.name}`);
+    while (!this.isSolved()) {
+      const availableSpace = this.secondJug.capacity - this.secondJug.water;
+      const waterToBeTransfered = Math.min(this.firstJug.water, availableSpace);
+      this.transferWater(this.firstJug, this.secondJug, waterToBeTransfered);
+      if (this.isSolved()) return;
+      this.fullFillFirstJugIfEmpty();
+      this.emptySecondJugIfFull();
     }
   }
 
-  private reset(firstJug: Jug, secondJug: Jug) {
-    firstJug.empty();
-    secondJug.empty();
+  private swapJugs() {
+    let temp: Jug = this.firstJug;
+    this.firstJug = this.secondJug;
+    this.secondJug = temp;
+  }
+
+  private reset() {
+    this.firstJug.empty();
+    this.secondJug.empty();
     this.currentStates = [];
   }
 
-  private recordState(firstJug: Jug, secondJug: Jug, explanation: string) {
-    this.currentStates.push({ firstJug: firstJug.water, secondJug: secondJug.water, explanation });
+  private recordState(explanation: string) {
+    this.currentStates.push({ firstJug: this.firstJug.water, secondJug: this.secondJug.water, explanation });
   }
 
-  private fullFillFirstJugIfEmpty(firstJug: Jug, secondJug: Jug) {
-    if (firstJug.isEmpty()) {
-      firstJug.fullFill();
-      this.recordState(firstJug, secondJug, `Fill bucket ${firstJug.name}`);
+  private fullFillFirstJugIfEmpty() {
+    if (this.firstJug.isEmpty()) {
+      this.firstJug.fullFill();
+      this.recordState(`Fill bucket ${this.firstJug.name}`);
     }
   }
 
-  private emptySecondJugIfFull(firstJug: Jug, secondJug: Jug) {
-    if (secondJug.isFull()) {
-      secondJug.empty();
-      this.recordState(firstJug, secondJug, `Dump bucket ${secondJug.name}`);
+  private emptySecondJugIfFull() {
+    if (this.secondJug.isFull()) {
+      this.secondJug.empty();
+      this.recordState(`Dump bucket ${this.secondJug.name}`);
     }
   }
 
-  private transfer(from: Jug, to: Jug, water: number) {
+  private transferWater(from: Jug, to: Jug, water: number) {
     from.dump(water);
     to.fill(water);
-    this.recordState(from, to, `Transfer bucket ${from.name} to bucket ${to.name}`);
+    this.recordState(`Transfer bucket ${from.name} to bucket ${to.name}`);
   }
 
-  private isSolved(firstJug: Jug, secondJug: Jug) {
-    return firstJug.water == this.Z || secondJug.water == this.Z;
+  private isSolved() {
+    return this.firstJug.water == this.Z || this.secondJug.water == this.Z;
+  }
+
+  private formatOutput(states: States[], labels: [string, string]) {
+    return states.map((s) => ({ [labels[0]]: s.firstJug, [labels[1]]: s.secondJug, explanation: s.explanation }));
   }
 }
 
