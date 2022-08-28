@@ -1,10 +1,12 @@
-import Jug from "../entities/Jug";
+import Jug from "../entity/Jug";
+import greatCommonDivisor from "../utils/Math";
 
-export default class SolveRiddle {
+export default class SolveChallenge {
   x: Jug;
   y: Jug;
 
   constructor(xCapacity: number, yCapacity: number, private z: number) {
+    if (z % greatCommonDivisor(xCapacity, yCapacity) != 0) throw new Error("There is no Solution");
     if (z > xCapacity && z > yCapacity) throw new Error("There is no Solution");
     this.x = new Jug(xCapacity);
     this.y = new Jug(yCapacity);

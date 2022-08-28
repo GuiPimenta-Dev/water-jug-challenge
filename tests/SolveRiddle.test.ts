@@ -1,8 +1,8 @@
-import SolveRiddle from "../src/usecase/SolveRiddle";
+import SolveChallenge from "../src/usecase/SolveChallenge";
 
-test("it should be able to solve the riddle", () => {
-  const riddle = new SolveRiddle(2, 10, 4);
-  const result = riddle.execute();
+test("it should be able to solve the Challenge", () => {
+  const Challenge = new SolveChallenge(2, 10, 4);
+  const result = Challenge.execute();
   const expectedResult = [
     {
       x: 2,
@@ -25,5 +25,9 @@ test("it should be able to solve the riddle", () => {
 });
 
 test("it should be throw an error if z is greater than x and y", () => {
-  expect(() => new SolveRiddle(1, 2, 5)).toThrow("There is no Solution");
+  expect(() => new SolveChallenge(1, 2, 5)).toThrow("There is no Solution");
+});
+
+it("it should thrown an error if Challenge has no resolution", () => {
+  expect(() => new SolveChallenge(8, 2, 7)).toThrow("There is no Solution");
 });
