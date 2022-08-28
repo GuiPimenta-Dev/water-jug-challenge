@@ -5,20 +5,24 @@ test("it should be able to solve the Challenge", () => {
   const result = Challenge.execute();
   const expectedResult = [
     {
-      x: 2,
-      y: 0,
+      X: 2,
+      Y: 0,
+      explanation: "Fill bucket X",
     },
     {
-      x: 0,
-      y: 2,
+      X: 0,
+      Y: 2,
+      explanation: "Transfer bucket X to bucket Y",
     },
     {
-      x: 2,
-      y: 2,
+      X: 2,
+      Y: 2,
+      explanation: "Fill bucket X",
     },
     {
-      x: 0,
-      y: 4,
+      X: 0,
+      Y: 4,
+      explanation: "Transfer bucket X to bucket Y",
     },
   ];
   expect(result).toEqual(expectedResult);

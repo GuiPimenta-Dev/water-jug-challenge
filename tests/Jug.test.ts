@@ -26,7 +26,7 @@ test("It should be able to dumb water from a jug", () => {
 
 test("It should throw an error when trying to dumb more water than it has", () => {
   const jug = new Jug(10);
-  expect(() => jug.dump(12)).toThrowError("Not enough water to dumb");
+  expect(() => jug.dump(12)).toThrowError("Not enough water to dump");
 });
 
 test("It should be able to check if a jug is empty", () => {

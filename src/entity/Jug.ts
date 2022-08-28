@@ -1,6 +1,6 @@
 export default class Jug {
   water: number;
-  constructor(readonly capacity: number, readonly name: string) {
+  constructor(readonly capacity: number, readonly name: string = "") {
     this.water = 0;
   }
 
