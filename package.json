@@ -1,7 +1,7 @@
 {
   "main": "index.js",
   "scripts": {
-    "test": "tsc && jest --silent ./dist",
+    "test": "tsc && jest ./dist",
     "coverage": "npx jest --coverage --runInBand",
     "dev": "nodemon",
     "start": "tsc && node ./dist/src/Server.js",
