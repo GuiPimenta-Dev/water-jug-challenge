@@ -16,9 +16,9 @@ export default class SolveChallenge {
     const firstAttempt = this.solve(this.x, this.y);
     const secondAttempt = this.solve(this.y, this.x);
     if (firstAttempt.length < secondAttempt.length) {
-      return firstAttempt.map((s) => ({ x: s.firstJug, y: s.secondJug, explanation: s.explanation }));
+      return firstAttempt.map((s) => ({ X: s.firstJug, Y: s.secondJug, explanation: s.explanation }));
     }
-    return secondAttempt.map((s) => ({ x: s.secondJug, y: s.firstJug, explanation: s.explanation }));
+    return secondAttempt.map((s) => ({ X: s.secondJug, Y: s.firstJug, explanation: s.explanation }));
   }
 
   private solve(firstJug: Jug, secondJug: Jug) {
