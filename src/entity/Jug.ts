@@ -1,6 +1,6 @@
 export default class Jug {
   water: number;
-  constructor(readonly capacity: number) {
+  constructor(readonly capacity: number, readonly name: string) {
     this.water = 0;
   }
 
@@ -9,8 +9,8 @@ export default class Jug {
     this.water += water;
   }
 
-  dumb(water: number) {
-    if (water > this.water) throw new Error("Not enough water to dumb");
+  dump(water: number) {
+    if (water > this.water) throw new Error("Not enough water to dump");
     this.water -= water;
   }
 

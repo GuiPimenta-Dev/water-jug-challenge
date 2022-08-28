@@ -20,13 +20,13 @@ test("It should be able to throw an error if tries to fill above capacity", () =
 test("It should be able to dumb water from a jug", () => {
   const jug = new Jug(10);
   jug.fill(10);
-  jug.dumb(10);
+  jug.dump(10);
   expect(jug.water).toBe(0);
 });
 
 test("It should throw an error when trying to dumb more water than it has", () => {
   const jug = new Jug(10);
-  expect(() => jug.dumb(12)).toThrowError("Not enough water to dumb");
+  expect(() => jug.dump(12)).toThrowError("Not enough water to dumb");
 });
 
 test("It should be able to check if a jug is empty", () => {
