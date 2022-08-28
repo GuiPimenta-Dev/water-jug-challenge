@@ -4,8 +4,8 @@ export default class SolveChallengeController {
   static solveChallenge(input: InputDTO): any {
     const { body } = input;
     if (!body.x || !body.y || !body.z) throw new Error("Missing required parameters");
-    const Challenge = new SolveChallenge(body.x, body.y, body.z);
-    return Challenge.execute();
+    const challenge = new SolveChallenge(body.x, body.y, body.z);
+    return challenge.execute();
   }
 }
 

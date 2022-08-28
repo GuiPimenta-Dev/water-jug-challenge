@@ -2,19 +2,19 @@ import Jug from "../entity/Jug";
 import greatCommonDivisor from "../utils/Math";
 
 export default class SolveChallenge {
-  x: Jug;
-  y: Jug;
+  X: Jug;
+  Y: Jug;
 
-  constructor(xCapacity: number, yCapacity: number, private z: number) {
-    if (z % greatCommonDivisor(xCapacity, yCapacity) != 0) throw new Error("There is no Solution");
-    if (z > xCapacity && z > yCapacity) throw new Error("There is no Solution");
-    this.x = new Jug(xCapacity, "X");
-    this.y = new Jug(yCapacity, "Y");
+  constructor(xCapacity: number, yCapacity: number, private Z: number) {
+    if (Z % greatCommonDivisor(xCapacity, yCapacity) != 0) throw new Error("There is no Solution");
+    if (Z > xCapacity && Z > yCapacity) throw new Error("There is no Solution");
+    this.X = new Jug(xCapacity, "X");
+    this.Y = new Jug(yCapacity, "Y");
   }
 
   execute() {
-    const firstAttempt = this.solve(this.x, this.y);
-    const secondAttempt = this.solve(this.y, this.x);
+    const firstAttempt = this.solve(this.X, this.Y);
+    const secondAttempt = this.solve(this.Y, this.X);
     if (firstAttempt.length < secondAttempt.length) {
       return firstAttempt.map((s) => ({ X: s.firstJug, Y: s.secondJug, explanation: s.explanation }));
     }
@@ -58,7 +58,7 @@ export default class SolveChallenge {
   }
 
   private isSolved(firstJug: Jug, secondJug: Jug) {
-    return firstJug.water == this.z || secondJug.water == this.z;
+    return firstJug.water == this.Z || secondJug.water == this.Z;
   }
 }
 
