@@ -66,7 +66,7 @@ Execute a Post to http://localhost:3000/challenge with the x, y and z as body pa
         "x": 2,
         "y": 10,
         "z": 4
-        }'
+    }'
 
 # Response
 
